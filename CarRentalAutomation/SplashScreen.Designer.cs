@@ -32,11 +32,13 @@
             // 
             // SplashScreen
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(722, 450);
+            ClientSize = new Size(722, 510);
             Name = "SplashScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "SplashScreen";
+            Load += SplashScreen_Load;
             ResumeLayout(false);
         }
 

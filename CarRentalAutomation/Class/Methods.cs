@@ -42,6 +42,29 @@ namespace CarRentalAutomation.Class
             }
             return dataTable;
         }
+
+        public static int Delete(string tableName,string whereColumn,int ID)
+        {
+            string query = $"DELETE FROM {tableName} WHERE {whereColumn} = {ID}";
+            using (SqlConnection connection = new SqlConnection(Constants.SQLPath))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        return command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+                    Methods.WriteLog(trace, ex);
+                    return 0;
+                }
+            }
+           
+        }
     }
 
     public static class Methods

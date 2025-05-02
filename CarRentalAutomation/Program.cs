@@ -11,7 +11,15 @@ namespace CarRentalAutomation
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            using (SplashScreen splashScreen = new SplashScreen())
+            {
+                if (splashScreen.ShowDialog() == DialogResult.OK)
+                {
+                    Application.Run(new MainForm());
+                }
+            }
         }
     }
 }

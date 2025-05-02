@@ -30,17 +30,30 @@
         {
             dgvCars = new DataGridView();
             btnAdd = new Button();
-            button1 = new Button();
-            button2 = new Button();
+            btnEdit = new Button();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCars).BeginInit();
             SuspendLayout();
             // 
             // dgvCars
             // 
-            dgvCars.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCars.Location = new Point(12, 12);
+            dgvCars.AllowUserToAddRows = false;
+            dgvCars.AllowUserToDeleteRows = false;
+            dgvCars.AllowUserToResizeColumns = false;
+            dgvCars.AllowUserToResizeRows = false;
+            dgvCars.ColumnHeadersHeight = 25;
+            dgvCars.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvCars.Location = new Point(12, 11);
+            dgvCars.MultiSelect = false;
             dgvCars.Name = "dgvCars";
-            dgvCars.Size = new Size(1460, 843);
+            dgvCars.ReadOnly = true;
+            dgvCars.RowHeadersVisible = false;
+            dgvCars.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvCars.RowTemplate.Height = 35;
+            dgvCars.RowTemplate.ReadOnly = true;
+            dgvCars.RowTemplate.Resizable = DataGridViewTriState.False;
+            dgvCars.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCars.Size = new Size(1254, 809);
             dgvCars.TabIndex = 0;
             // 
             // btnAdd
@@ -50,48 +63,51 @@
             btnAdd.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
             btnAdd.Image = Properties.Resources.Ionic_Ionicons_Add_circle_32;
             btnAdd.ImageAlign = ContentAlignment.MiddleRight;
-            btnAdd.Location = new Point(1478, 12);
+            btnAdd.Location = new Point(1272, 11);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(197, 49);
             btnAdd.TabIndex = 3;
             btnAdd.Text = "YENİ KAYIT";
             btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
-            // button1
+            // btnEdit
             // 
-            button1.BackColor = Color.FromArgb(182, 12, 9);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            button1.Image = Properties.Resources.Ionic_Ionicons_Create_32;
-            button1.ImageAlign = ContentAlignment.MiddleRight;
-            button1.Location = new Point(1478, 67);
-            button1.Name = "button1";
-            button1.Size = new Size(197, 49);
-            button1.TabIndex = 4;
-            button1.Text = "DÜZENLE";
-            button1.UseVisualStyleBackColor = false;
+            btnEdit.BackColor = Color.FromArgb(182, 12, 9);
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            btnEdit.Image = Properties.Resources.Ionic_Ionicons_Create_32;
+            btnEdit.ImageAlign = ContentAlignment.MiddleRight;
+            btnEdit.Location = new Point(1272, 66);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(197, 49);
+            btnEdit.TabIndex = 4;
+            btnEdit.Text = "DÜZENLE";
+            btnEdit.UseVisualStyleBackColor = false;
+            btnEdit.Click += btnEdit_Click;
             // 
-            // button2
+            // btnDelete
             // 
-            button2.BackColor = Color.FromArgb(182, 12, 9);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            button2.Image = Properties.Resources.Ionic_Ionicons_Trash_32;
-            button2.ImageAlign = ContentAlignment.MiddleRight;
-            button2.Location = new Point(1478, 122);
-            button2.Name = "button2";
-            button2.Size = new Size(197, 49);
-            button2.TabIndex = 5;
-            button2.Text = "SİL";
-            button2.UseVisualStyleBackColor = false;
+            btnDelete.BackColor = Color.FromArgb(182, 12, 9);
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            btnDelete.Image = Properties.Resources.Ionic_Ionicons_Trash_32;
+            btnDelete.ImageAlign = ContentAlignment.MiddleRight;
+            btnDelete.Location = new Point(1272, 121);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(197, 49);
+            btnDelete.TabIndex = 5;
+            btnDelete.Text = "SİL";
+            btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // CarsList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1687, 867);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            ClientSize = new Size(1481, 833);
+            Controls.Add(btnDelete);
+            Controls.Add(btnEdit);
             Controls.Add(btnAdd);
             Controls.Add(dgvCars);
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
@@ -109,7 +125,7 @@
 
         private DataGridView dgvCars;
         private Button btnAdd;
-        private Button button1;
-        private Button button2;
+        private Button btnEdit;
+        private Button btnDelete;
     }
 }
