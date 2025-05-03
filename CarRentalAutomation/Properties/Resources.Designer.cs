@@ -73,6 +73,16 @@ namespace CarRentalAutomation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Ionic_Ionicons_Arrow_forward_circle_32 {
+            get {
+                object obj = ResourceManager.GetObject("Ionic-Ionicons-Arrow-forward-circle.32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ionic_Ionicons_Car_32 {
             get {
                 object obj = ResourceManager.GetObject("Ionic-Ionicons-Car.32", resourceCulture);
@@ -196,6 +206,16 @@ namespace CarRentalAutomation.Properties {
         internal static System.Drawing.Bitmap Ionic_Ionicons_Person_circle_64 {
             get {
                 object obj = ResourceManager.GetObject("Ionic-Ionicons-Person-circle.64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ionic_Ionicons_Search_circle_32 {
+            get {
+                object obj = ResourceManager.GetObject("Ionic-Ionicons-Search-circle.32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

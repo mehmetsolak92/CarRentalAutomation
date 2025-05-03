@@ -38,4 +38,54 @@ namespace CarRentalAutomation.Class
             SigortaBitisTarihi = sigortaBitisTarihi;
         }
     }
+
+
+    public class Kullanici
+    {
+        public int KullaniciId { get; set; }
+        public string AdSoyad { get; set; }
+        public string Telefon { get; set; }
+        public string Mail { get; set; }
+        public string TcNo { get; set; }
+        public string EhliyetNo { get; set; }
+        public DateTime EhliyetTarihi { get; set; }
+        public string EhliyetSinifi { get; set; }
+
+        public Kullanici(int kullaniciId, string adSoyad, string telefon, string mail, string tcNo,
+                         string ehliyetNo, DateTime ehliyetTarihi, string ehliyetSinifi)
+        {
+            KullaniciId = kullaniciId;
+            AdSoyad = adSoyad;
+            Telefon = telefon;
+            Mail = mail;
+            TcNo = tcNo;
+            EhliyetNo = ehliyetNo;
+            EhliyetTarihi = ehliyetTarihi;
+            EhliyetSinifi = ehliyetSinifi;
+        }
+    }
+
+
+    public class Marka
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    public class Model
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int MarkaID { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
 }

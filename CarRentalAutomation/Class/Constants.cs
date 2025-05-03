@@ -13,6 +13,8 @@ namespace CarRentalAutomation.Class
         public static List<Marka> Markalar = new List<Marka>();
         public static List<Model> Modeller = new List<Model>();
         public static List<string> Renkler = new List<string>();
+        public static List<Arac> Araclar= new List<Arac>();
+        public static List<Kullanici> Kullanicilar = new List<Kullanici>();
 
         public static List<string> VitesTipi = new List<string>
         {
@@ -44,27 +46,9 @@ namespace CarRentalAutomation.Class
 
 
 
-        public class Marka
-        {
-            public int ID { get; set; }
-            public string Name { get; set; }
-         
-            public override string ToString()
-            {
-                return Name;
-            }
-        }
+       
 
-        public class Model
-        {
-            public int ID { get; set; }
-            public string Name { get; set; }
-            public int MarkaID { get; set; }
-            public override string ToString()
-            {
-                return Name;
-            }
-        }
+        
 
         
     }

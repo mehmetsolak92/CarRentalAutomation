@@ -61,7 +61,7 @@ namespace CarRentalAutomation
         {
             if (cmbMarka.SelectedIndex > 0)
             {
-                Constants.Marka selectedMarka = (Constants.Marka)cmbMarka.SelectedItem;
+                Marka selectedMarka = (Marka)cmbMarka.SelectedItem;
 
                 var filteredModeller = Constants.Modeller
                     .Where(d => d.MarkaID == selectedMarka.ID)
@@ -75,7 +75,7 @@ namespace CarRentalAutomation
             else
             {
                 cmbModel.Enabled = false;
-                cmbModel.DataSource = new List<Constants.Model> { new Constants.Model { Name = "Seçiniz..", ID = -1 } };
+                cmbModel.DataSource = new List<Model> { new Model { Name = "Seçiniz..", ID = -1 } };
                 cmbModel.SelectedIndex = 0;
             }
         }
@@ -173,6 +173,7 @@ namespace CarRentalAutomation
                     SqlCommand cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() > 0)
                     {
+                        Data.GetCarsData();
                         this.DialogResult = DialogResult.OK;
                     }
                     else
@@ -206,6 +207,7 @@ namespace CarRentalAutomation
                     SqlCommand cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() > 0)
                     {
+                        Data.GetCarsData();
                         this.DialogResult = DialogResult.OK;
                     }
                     else

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CarRentalAutomation.Class
 {
@@ -64,6 +65,88 @@ namespace CarRentalAutomation.Class
                 }
             }
            
+        }
+    }
+
+    public static class Data
+    {
+        public static void GetCustomersData()
+        {
+            Constants.Kullanicilar.Clear();
+            Constants.Kullanicilar.Add(new Kullanici(
+                -1,
+                "Seçiniz..",
+                "", "", "", "", DateTime.Now.Date, ""
+            ));
+
+            string query = "SELECT * FROM Kullanicilar";
+            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Constants.Kullanicilar.Add(new Kullanici(
+                            Convert.ToInt32(reader["KullaniciId"]),
+                            Convert.ToString(reader["AdSoyad"]),
+                            Convert.ToString(reader["Telefon"]),
+                            Convert.ToString(reader["Email"]),
+                            Convert.ToString(reader["TcNo"]),
+                            Convert.ToString(reader["EhliyetNo"]),
+                            Convert.ToDateTime(reader["EhliyetTarihi"]),
+                            Convert.ToString(reader["EhliyetSinifi"])
+                        ));
+                    }
+                }
+            }
+        }
+
+        public static void GetCarsData()
+        {
+            Constants.Araclar.Clear();
+            Constants.Araclar.Add(new Arac(
+                -1,
+                "Seçiniz..",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                0,
+                0,
+                "",
+                DateTime.Now.Date
+            ));
+
+            string query = "SELECT * FROM Araclar";
+            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Constants.Araclar.Add(new Arac(
+                            Convert.ToInt32(reader["AracId"]),
+                            Convert.ToString(reader["Plaka"]),
+                            Convert.ToString(reader["Marka"]),
+                            Convert.ToString(reader["Model"]),
+                            Convert.ToInt32(reader["Yil"]),
+                            Convert.ToString(reader["VitesTipi"]),
+                            Convert.ToString(reader["YakitTipi"]),
+                            Convert.ToString(reader["Renk"]),
+                            Convert.ToInt32(reader["Kilometre"]),
+                            Convert.ToDecimal(reader["GunlukKiraUcreti"]),
+                            Convert.ToString(reader["Durum"]),
+                            Convert.ToDateTime(reader["SigortaBitisTarihi"])
+                        ));
+                    }
+                }
+            }
         }
     }
 

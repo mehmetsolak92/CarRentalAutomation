@@ -29,7 +29,7 @@ namespace CarRentalAutomation
         {
             
             string query = "SELECT * FROM Markalar ORDER BY MarkaAdi";
-            Constants.Markalar.Add(new Constants.Marka { ID = -1, Name = "Seçiniz.." });
+            Constants.Markalar.Add(new Marka { ID = -1, Name = "Seçiniz.." });
             using (SqlConnection con = new SqlConnection(Constants.SQLPath))
             {
                 con.Open();
@@ -38,7 +38,7 @@ namespace CarRentalAutomation
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Constants.Markalar.Add(new Constants.Marka
+                        Constants.Markalar.Add(new Marka
                         {
                             ID = Convert.ToInt32(reader["MarkaId"]),
                             Name = Convert.ToString(reader["MarkaAdi"]),
@@ -49,7 +49,7 @@ namespace CarRentalAutomation
 
 
             query = "SELECT * FROM Modeller";
-            Constants.Modeller.Add(new Constants.Model { ID = -1, Name = "Seçiniz..", MarkaID = -1 });
+            Constants.Modeller.Add(new Model { ID = -1, Name = "Seçiniz..", MarkaID = -1 });
             using (SqlConnection con = new SqlConnection(Constants.SQLPath))
             {
                 con.Open();
@@ -58,7 +58,7 @@ namespace CarRentalAutomation
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        Constants.Modeller.Add(new Constants.Model
+                        Constants.Modeller.Add(new Model
                         {
                             ID = Convert.ToInt32(reader["ModelId"]),
                             Name = Convert.ToString(reader["ModelAdi"]),
@@ -82,6 +82,11 @@ namespace CarRentalAutomation
                     }
                 }
             }
+
+
+            Data.GetCustomersData();
+            Data.GetCarsData();
+
 
         }
     }

@@ -87,7 +87,7 @@ namespace CarRentalAutomation
                 if (dialogResult == DialogResult.Yes)
                 {
 
-                    if (musteriId == 0) InsertCarToDB(); else UpdateCarData();
+                    if (musteriId == 0) InsertCustomerToDB(); else UpdateCustomerData();
 
                     if (this.DialogResult == DialogResult.OK)
                     {
@@ -97,7 +97,7 @@ namespace CarRentalAutomation
             }
         }
 
-        private void InsertCarToDB()
+        private void InsertCustomerToDB()
         {
             try
             {
@@ -110,6 +110,7 @@ namespace CarRentalAutomation
                     SqlCommand cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() > 0)
                     {
+                        Data.GetCustomersData();
                         this.DialogResult = DialogResult.OK;
                     }
                     else
@@ -126,7 +127,7 @@ namespace CarRentalAutomation
             }
         }
 
-        private void UpdateCarData()
+        private void UpdateCustomerData()
         {
 
             try
@@ -141,6 +142,7 @@ namespace CarRentalAutomation
                     SqlCommand cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() > 0)
                     {
+                        Data.GetCustomersData();
                         this.DialogResult = DialogResult.OK;
                     }
                     else
