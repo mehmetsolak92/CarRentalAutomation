@@ -19,7 +19,7 @@ namespace CarRentalAutomation
         {
             InitializeComponent();
         }
-
+        public MainForm AnaForm { get; set; }
         bool isNotFirstRun = false;
         decimal toplamTutar = 0;
         private void Rent_Load(object sender, EventArgs e)
@@ -77,25 +77,8 @@ namespace CarRentalAutomation
                 query += $" AND Araclar.YakitTipi = '{cmbYakit.SelectedItem.ToString()}'";
             }
 
-            using (SqlConnection connectiom = new SqlConnection(Constants.SQLPath))
-            {
-                try
-                {
-                    connectiom.Open();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connectiom))
-                    {
-                        adapter.Fill(dataTable);
-                    }
-                    dgvCars.DataSource = dataTable;
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
-                    Methods.WriteLog(trace, ex);
-
-                }
-            }
-
+            dataTable = SQL.Select(query);
+            dgvCars.DataSource = dataTable;
             EditDgvCars();
         }
 
@@ -158,15 +141,6 @@ namespace CarRentalAutomation
             }
         }
 
-        private void cmbVites_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbYakit_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void cmbKullanici_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -264,6 +238,7 @@ namespace CarRentalAutomation
                     if (cmd.ExecuteNonQuery() > 0)
                     {
                         this.DialogResult = DialogResult.OK;
+
                     }
                     else
                     {
@@ -277,6 +252,15 @@ namespace CarRentalAutomation
                 Methods.WriteLog(trace, ex);
                 MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnActiveRents_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            RentActiveList rentActiveList = new RentActiveList();
+            rentActiveList.AnaForm = this.AnaForm;
+            Methods.showFormInPanel(AnaForm.pnlScreens, rentActiveList);
+
         }
     }
 }

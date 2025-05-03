@@ -18,6 +18,8 @@ namespace CarRentalAutomation.Class
 
     }
 
+    
+
     public static class SQL
     {
         public static DataTable Select(string query)

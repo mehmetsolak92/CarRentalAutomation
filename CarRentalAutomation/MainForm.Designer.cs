@@ -268,6 +268,6 @@
         private Label label1;
         private Panel pnlFooter;
         private Label label3;
-        private Panel pnlScreens;
+        public Panel pnlScreens;
     }
 }

@@ -64,6 +64,7 @@
             txtAciklama = new TextBox();
             label2 = new Label();
             errorProvider1 = new ErrorProvider(components);
+            btnActiveRents = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCars).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             gbKullanici.SuspendLayout();
@@ -119,11 +120,12 @@
             btnSearchCar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
             btnSearchCar.Image = Properties.Resources.Ionic_Ionicons_Search_circle_32;
             btnSearchCar.ImageAlign = ContentAlignment.MiddleRight;
-            btnSearchCar.Location = new Point(1045, 51);
+            btnSearchCar.Location = new Point(1047, 47);
             btnSearchCar.Name = "btnSearchCar";
             btnSearchCar.Size = new Size(217, 69);
             btnSearchCar.TabIndex = 30;
             btnSearchCar.Text = "ARAÇLARI LİSTELE";
+            btnSearchCar.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnSearchCar.UseVisualStyleBackColor = false;
             btnSearchCar.Click += btnSearchCar_Click;
             // 
@@ -195,7 +197,6 @@
             cmbYakit.Name = "cmbYakit";
             cmbYakit.Size = new Size(222, 29);
             cmbYakit.TabIndex = 38;
-            cmbYakit.SelectedIndexChanged += cmbYakit_SelectedIndexChanged;
             // 
             // cmbVites
             // 
@@ -206,7 +207,6 @@
             cmbVites.Name = "cmbVites";
             cmbVites.Size = new Size(222, 29);
             cmbVites.TabIndex = 37;
-            cmbVites.SelectedIndexChanged += cmbVites_SelectedIndexChanged;
             // 
             // lblYakit
             // 
@@ -444,11 +444,28 @@
             errorProvider1.ContainerControl = this;
             errorProvider1.Icon = (Icon)resources.GetObject("errorProvider1.Icon");
             // 
+            // btnActiveRents
+            // 
+            btnActiveRents.BackColor = Color.FromArgb(184, 12, 9);
+            btnActiveRents.FlatStyle = FlatStyle.Flat;
+            btnActiveRents.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            btnActiveRents.Image = Properties.Resources.Ionic_Ionicons_Car_32;
+            btnActiveRents.ImageAlign = ContentAlignment.MiddleRight;
+            btnActiveRents.Location = new Point(1270, 47);
+            btnActiveRents.Name = "btnActiveRents";
+            btnActiveRents.Size = new Size(217, 69);
+            btnActiveRents.TabIndex = 58;
+            btnActiveRents.Text = "AKTİF KİRALAMALAR";
+            btnActiveRents.TextImageRelation = TextImageRelation.TextBeforeImage;
+            btnActiveRents.UseVisualStyleBackColor = false;
+            btnActiveRents.Click += btnActiveRents_Click;
+            // 
             // Rent
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1505, 910);
+            Controls.Add(btnActiveRents);
             Controls.Add(label2);
             Controls.Add(txtAciklama);
             Controls.Add(lblKiralamaSüresi);
@@ -522,5 +539,6 @@
         private TextBox txtAciklama;
         private Label label2;
         private ErrorProvider errorProvider1;
+        private Button btnActiveRents;
     }
 }

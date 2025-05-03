@@ -30,6 +30,7 @@ namespace CarRentalAutomation
         private void btnMenuRent_Click(object sender, EventArgs e)
         {
             Rent rentPage = new Rent();
+            rentPage.AnaForm = this;
             Methods.showFormInPanel(pnlScreens, rentPage);
         }
 
