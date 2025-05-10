@@ -120,11 +120,14 @@ namespace CarRentalAutomation
                     MessageBox.Show("Araç silinirken hata oluştu.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                
+
                 GetCarsData();
             }
         }
 
-       
+        private void btnExportCsv_Click(object sender, EventArgs e)
+        {
+            Data.ExportToExcel(dgvCars, "Araçlar");
+        }
     }
 }

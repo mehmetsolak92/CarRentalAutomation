@@ -9,14 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="WinForms.DataVisualization" Version="1.10.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="SettingsUsersAddEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="CustomersAddEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -37,7 +38,10 @@
     <Compile Update="RentActiveList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Reports.cs">
+    <Compile Update="SettingsUsersChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsUsers.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Settings.cs">

@@ -15,6 +15,10 @@ namespace CarRentalAutomation.Class
         public static List<string> Renkler = new List<string>();
         public static List<Arac> Araclar= new List<Arac>();
         public static List<Kullanici> Kullanicilar = new List<Kullanici>();
+        public static List<Personel> Personeller = new List<Personel>();
+        public static Personel ActiveUser = new Personel(0, "admin", "", "Yönetici", "", "", "");
+        public static decimal kasaTutari = 0;
+
 
         public static List<string> VitesTipi = new List<string>
         {
@@ -44,12 +48,19 @@ namespace CarRentalAutomation.Class
             "E"
         };
 
+        public static List<string> Gorevler = new List<string>
+        {
+            "Seçiniz..",
+            "Yönetici",
+            "Personel"
+        };
 
 
-       
 
-        
 
-        
+
+
+
+
     }
 }

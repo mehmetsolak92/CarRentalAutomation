@@ -32,6 +32,7 @@
             btnAdd = new Button();
             btnEdit = new Button();
             btnDelete = new Button();
+            btnExportCsv = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCars).BeginInit();
             SuspendLayout();
             // 
@@ -101,11 +102,27 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnExportCsv
+            // 
+            btnExportCsv.BackColor = Color.FromArgb(182, 12, 9);
+            btnExportCsv.FlatStyle = FlatStyle.Flat;
+            btnExportCsv.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            btnExportCsv.Image = Properties.Resources.Icons8_Windows_8_Logos_Excel_32;
+            btnExportCsv.ImageAlign = ContentAlignment.MiddleRight;
+            btnExportCsv.Location = new Point(1272, 176);
+            btnExportCsv.Name = "btnExportCsv";
+            btnExportCsv.Size = new Size(197, 49);
+            btnExportCsv.TabIndex = 6;
+            btnExportCsv.Text = "DIŞA AKTAR";
+            btnExportCsv.UseVisualStyleBackColor = false;
+            btnExportCsv.Click += btnExportCsv_Click;
+            // 
             // CarsList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1481, 833);
+            Controls.Add(btnExportCsv);
             Controls.Add(btnDelete);
             Controls.Add(btnEdit);
             Controls.Add(btnAdd);
@@ -127,5 +144,6 @@
         private Button btnAdd;
         private Button btnEdit;
         private Button btnDelete;
+        private Button btnExportCsv;
     }
 }

@@ -13,28 +13,41 @@ using System.Windows.Forms;
 
 namespace CarRentalAutomation
 {
-    public partial class CustomersAddEdit : BaseForm
+    public partial class SettingsUsersAddEdit : BaseForm
     {
-        int musteriId = 0;
+        int personelId = 0;
 
-        public CustomersAddEdit(int _musteriId)
+        public SettingsUsersAddEdit(int _personelId)
         {
             InitializeComponent();
-            musteriId = _musteriId;
+            personelId = _personelId;
         }
 
-
-
-        private void CustomersAddEdit_Load(object sender, EventArgs e)
+        private void SettingsUsersAddEdit_Load(object sender, EventArgs e)
         {
-            cmbEhliyetSinif.DataSource = Constants.EhliyetSinifi;
+            cmbGorev.DataSource = Constants.Gorevler;
 
-            if (musteriId != 0)
+            if (personelId > 0)
             {
-                ReadCustomerData(musteriId);
-                this.Text = "KULLANICI GÜNCELLE";
+                this.Text = "PERSONEL GÜNCELLE";
+                this.Size = new Size(this.Width, this.Height - 88);
+                btnSave.Location = new Point(btnSave.Location.X, btnSave.Location.Y - 88);
+                btnCancel.Location = new Point(btnCancel.Location.X, btnCancel.Location.Y - 88);
+                lblPassword.Visible = false;
+                lblPasswordR.Visible = false;
+                txtPassword.Visible = false;
+                txtPasswordR.Visible = false;
+
+                ReadSStaffData(personelId);
             }
+            else
+            {
+                this.Text = "YENİ PERSONEL EKLE";
+            }
+
+            
         }
+
         private bool ValidateFields()
         {
             errorProvider1.Clear();
@@ -62,17 +75,27 @@ namespace CarRentalAutomation
                 isValid = false;
             }
 
-            if (string.IsNullOrEmpty(txtEhliyetNo.Text))
+            if (cmbGorev.SelectedIndex == 0)
             {
-                errorProvider1.SetError(txtEhliyetNo, "Ehliyet no boş bırakılamaz!");
+                errorProvider1.SetError(cmbGorev, "Personelin görevini seçiniz!");
                 isValid = false;
             }
 
-            if (cmbEhliyetSinif.SelectedIndex == 0)
+            if (personelId == 0)
             {
-                errorProvider1.SetError(cmbEhliyetSinif, "Ehliyet sınıfı seçmelisiniz!");
-                isValid = false;
+                if (!Methods.IsPasswordStrong(txtPassword.Text))
+                {
+                    errorProvider1.SetError(txtPassword, "Parola en az 4 karakter ve en az 1 harf 1 sayı içermelidir!");
+                    isValid = false;
+                }
+
+                if (txtPassword.Text != txtPasswordR.Text)
+                {
+                    errorProvider1.SetError(txtPasswordR, "Şifre tekrarı parola ile uyuşmuyor!");
+                    isValid = false;
+                }
             }
+           
 
             return isValid;
         }
@@ -82,12 +105,12 @@ namespace CarRentalAutomation
             if (ValidateFields())
             {
                 string msgStr = string.Empty;
-                if (musteriId == 0) msgStr = "Yeni kullanıcı eklenecek. Emin misiniz?"; else msgStr = "Kullanıcı güncellenecek. Emin misiniz?";
+                if (personelId == 0) msgStr = "Yeni personel eklenecek. Emin misiniz?"; else msgStr = "Personel güncellenecek. Emin misiniz?";
                 DialogResult dialogResult = MessageBox.Show(msgStr, "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
                 {
 
-                    if (musteriId == 0) InsertCustomerToDB(); else UpdateCustomerData();
+                    if (personelId == 0) InsertStaffToDB(); else UpdateStaffData();
 
                     if (this.DialogResult == DialogResult.OK)
                     {
@@ -97,12 +120,12 @@ namespace CarRentalAutomation
             }
         }
 
-        private void InsertCustomerToDB()
+        private void InsertStaffToDB()
         {
             try
             {
-                string query = $"INSERT INTO Kullanicilar (AdSoyad, Telefon, Email, TcNo, EhliyetNo, EhliyetTarihi, EhliyetSinifi) " +
-                    $"VALUES ('{txtAdSoyad.Text}', '{txtTelefon.Text}', '{txtMail.Text}', {txtTcKimlikNo.Text}, '{txtEhliyetNo.Text}', '{dtpEhliyetTarih.Value.Date.ToString("yyyy-MM-dd")}', '{cmbEhliyetSinif.Text}')";
+                string query = $"INSERT INTO Personeller (AdSoyad, Sifre, Gorev, Telefon, Email, TcNo) " +
+                    $"VALUES ('{txtAdSoyad.Text}', '{Methods.ComputeSha256Hash(txtPassword.Text)}', '{cmbGorev.Text}', {txtTelefon.Text}, '{txtMail.Text}', '{txtTcKimlikNo.Text}')";
 
                 using (SqlConnection con = new SqlConnection(Constants.SQLPath))
                 {
@@ -110,7 +133,7 @@ namespace CarRentalAutomation
                     SqlCommand cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() > 0)
                     {
-                        Data.GetCustomersData();
+                        Data.GetStaffsData();
                         this.DialogResult = DialogResult.OK;
                     }
                     else
@@ -127,14 +150,13 @@ namespace CarRentalAutomation
             }
         }
 
-        private void UpdateCustomerData()
+        private void UpdateStaffData()
         {
 
             try
             {
-                string query = $"UPDATE Kullanicilar SET AdSoyad = '{txtAdSoyad.Text}', Telefon = '{txtTelefon.Text}', Email = '{txtMail.Text}'" +
-                $", TcNo = {txtTcKimlikNo.Text}, EhliyetNo = '{txtEhliyetNo.Text}', EhliyetTarihi = '{dtpEhliyetTarih.Value.Date.ToString("yyyy-MM-dd")}'" +
-                $", EhliyetSinifi = '{cmbEhliyetSinif.Text}' WHERE KullaniciId = {musteriId}";
+                string query = $"UPDATE Personeller SET AdSoyad = '{txtAdSoyad.Text}', Telefon = '{txtTelefon.Text}', Email = '{txtMail.Text}'" +
+                $", TcNo = '{txtTcKimlikNo.Text}', Gorev = '{cmbGorev.Text}' WHERE PersonelId = {personelId}";
 
                 using (SqlConnection con = new SqlConnection(Constants.SQLPath))
                 {
@@ -142,7 +164,7 @@ namespace CarRentalAutomation
                     SqlCommand cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() > 0)
                     {
-                        Data.GetCustomersData();
+                        Data.GetStaffsData();
                         this.DialogResult = DialogResult.OK;
                     }
                     else
@@ -161,11 +183,11 @@ namespace CarRentalAutomation
 
         }
 
-        void ReadCustomerData(int ID)
+        void ReadSStaffData(int ID)
         {
             try
             {
-                string query = $"SELECT * FROM Kullanicilar WHERE KullaniciId = {ID}";
+                string query = $"SELECT * FROM Personeller WHERE PersonelId = {ID}";
 
                 using SqlConnection con = new SqlConnection(Constants.SQLPath);
                 {
@@ -179,9 +201,8 @@ namespace CarRentalAutomation
                             txtTelefon.Text = Convert.ToString(reader["Telefon"]);
                             txtMail.Text = Convert.ToString(reader["Email"]);
                             txtTcKimlikNo.Text = Convert.ToString(reader["TcNo"]);
-                            txtEhliyetNo.Text = Convert.ToString(reader["EhliyetNo"]);
-                            dtpEhliyetTarih.Value = Convert.ToDateTime(reader["EhliyetTarihi"]);
-                            cmbEhliyetSinif.Text = Convert.ToString(reader["EhliyetSinifi"]);
+                            cmbGorev.Text = Convert.ToString(reader["Gorev"]);
+
                         }
                         else
                         {
@@ -213,8 +234,8 @@ namespace CarRentalAutomation
             }
         }
 
-       
-
         
+
+       
     }
 }

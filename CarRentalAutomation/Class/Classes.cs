@@ -65,6 +65,29 @@ namespace CarRentalAutomation.Class
         }
     }
 
+    public class Personel
+    {
+        public int PersonelId { get; set; }
+        public string AdSoyad { get; set; }
+        public string Sifre { get; set; } // SHA-256 hash (64 karakter)
+        public string Gorev { get; set; }
+        public string Telefon { get; set; }
+        public string Email { get; set; }
+        public string TcNo { get; set; }
+
+        public Personel(int personelId, string adSoyad, string sifre, string gorev,
+                        string telefon, string email, string tcNo)
+        {
+            PersonelId = personelId;
+            AdSoyad = adSoyad;
+            Sifre = sifre;
+            Gorev = gorev;
+            Telefon = telefon;
+            Email = email;
+            TcNo = tcNo;
+        }
+    }
+
 
     public class Marka
     {

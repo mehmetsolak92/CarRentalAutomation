@@ -33,6 +33,7 @@
             btnAdd = new Button();
             dgvCustomers = new DataGridView();
             pnlScreens = new Panel();
+            btnExportCsv = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             pnlScreens.SuspendLayout();
             SuspendLayout();
@@ -106,6 +107,7 @@
             // pnlScreens
             // 
             pnlScreens.BackColor = Color.FromArgb(229, 231, 230);
+            pnlScreens.Controls.Add(btnExportCsv);
             pnlScreens.Controls.Add(btnDelete);
             pnlScreens.Controls.Add(btnAdd);
             pnlScreens.Controls.Add(btnEdit);
@@ -114,6 +116,21 @@
             pnlScreens.Name = "pnlScreens";
             pnlScreens.Size = new Size(1481, 833);
             pnlScreens.TabIndex = 10;
+            // 
+            // btnExportCsv
+            // 
+            btnExportCsv.BackColor = Color.FromArgb(182, 12, 9);
+            btnExportCsv.FlatStyle = FlatStyle.Flat;
+            btnExportCsv.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            btnExportCsv.Image = Properties.Resources.Icons8_Windows_8_Logos_Excel_32;
+            btnExportCsv.ImageAlign = ContentAlignment.MiddleRight;
+            btnExportCsv.Location = new Point(1272, 176);
+            btnExportCsv.Name = "btnExportCsv";
+            btnExportCsv.Size = new Size(197, 49);
+            btnExportCsv.TabIndex = 10;
+            btnExportCsv.Text = "DIŞA AKTAR";
+            btnExportCsv.UseVisualStyleBackColor = false;
+            btnExportCsv.Click += btnExportCsv_Click;
             // 
             // Customers
             // 
@@ -140,5 +157,6 @@
         private Button btnAdd;
         private DataGridView dgvCustomers;
         private Panel pnlScreens;
+        private Button btnExportCsv;
     }
 }

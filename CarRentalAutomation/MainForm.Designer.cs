@@ -28,21 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             pnlSide = new FlowLayoutPanel();
             pnlUser = new Panel();
-            label2 = new Label();
-            label1 = new Label();
+            lblActiveUser = new Label();
+            _lblActiveUser = new Label();
             pbUserImg = new PictureBox();
             btnMenuHome = new Button();
             btnMenuRent = new Button();
             btnMenuCars = new Button();
             btnMenuCustomers = new Button();
             btnMenuFinance = new Button();
-            btnMenuReports = new Button();
             btnMenuSettings = new Button();
             pnlFooter = new Panel();
-            label3 = new Label();
+            lblTime = new Label();
+            lblVersion = new Label();
             pnlScreens = new Panel();
+            timer1 = new System.Windows.Forms.Timer(components);
             pnlSide.SuspendLayout();
             pnlUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbUserImg).BeginInit();
@@ -58,7 +61,6 @@
             pnlSide.Controls.Add(btnMenuCars);
             pnlSide.Controls.Add(btnMenuCustomers);
             pnlSide.Controls.Add(btnMenuFinance);
-            pnlSide.Controls.Add(btnMenuReports);
             pnlSide.Controls.Add(btnMenuSettings);
             pnlSide.Dock = DockStyle.Left;
             pnlSide.Location = new Point(0, 0);
@@ -68,32 +70,33 @@
             // 
             // pnlUser
             // 
-            pnlUser.Controls.Add(label2);
-            pnlUser.Controls.Add(label1);
+            pnlUser.Controls.Add(lblActiveUser);
+            pnlUser.Controls.Add(_lblActiveUser);
             pnlUser.Controls.Add(pbUserImg);
             pnlUser.Location = new Point(3, 3);
             pnlUser.Name = "pnlUser";
             pnlUser.Size = new Size(197, 150);
             pnlUser.TabIndex = 1;
             // 
-            // label2
+            // lblActiveUser
             // 
-            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label2.Location = new Point(8, 106);
-            label2.Name = "label2";
-            label2.Size = new Size(185, 23);
-            label2.TabIndex = 2;
-            label2.Text = "user";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            lblActiveUser.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            lblActiveUser.Location = new Point(8, 106);
+            lblActiveUser.Name = "lblActiveUser";
+            lblActiveUser.Size = new Size(185, 23);
+            lblActiveUser.TabIndex = 2;
+            lblActiveUser.Text = "user";
+            lblActiveUser.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // _lblActiveUser
             // 
-            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            label1.Location = new Point(48, 83);
-            label1.Name = "label1";
-            label1.Size = new Size(104, 23);
-            label1.TabIndex = 1;
-            label1.Text = "Aktif Kullanıcı:";
+            _lblActiveUser.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            _lblActiveUser.Location = new Point(8, 83);
+            _lblActiveUser.Name = "_lblActiveUser";
+            _lblActiveUser.Size = new Size(185, 23);
+            _lblActiveUser.TabIndex = 1;
+            _lblActiveUser.Text = "Aktif Kullanıcı:";
+            _lblActiveUser.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pbUserImg
             // 
@@ -103,6 +106,7 @@
             pbUserImg.Size = new Size(64, 64);
             pbUserImg.TabIndex = 0;
             pbUserImg.TabStop = false;
+            pbUserImg.Click += pbUserImg_Click;
             // 
             // btnMenuHome
             // 
@@ -174,27 +178,13 @@
             btnMenuFinance.UseVisualStyleBackColor = true;
             btnMenuFinance.Click += btnMenuFinance_Click;
             // 
-            // btnMenuReports
-            // 
-            btnMenuReports.FlatStyle = FlatStyle.Flat;
-            btnMenuReports.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
-            btnMenuReports.Image = Properties.Resources.Ionic_Ionicons_Document_text_32;
-            btnMenuReports.ImageAlign = ContentAlignment.MiddleRight;
-            btnMenuReports.Location = new Point(3, 434);
-            btnMenuReports.Name = "btnMenuReports";
-            btnMenuReports.Size = new Size(197, 49);
-            btnMenuReports.TabIndex = 7;
-            btnMenuReports.Text = "RAPORLAR";
-            btnMenuReports.UseVisualStyleBackColor = true;
-            btnMenuReports.Click += btnMenuReports_Click;
-            // 
             // btnMenuSettings
             // 
             btnMenuSettings.FlatStyle = FlatStyle.Flat;
             btnMenuSettings.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
             btnMenuSettings.Image = Properties.Resources.Ionic_Ionicons_Construct_32;
             btnMenuSettings.ImageAlign = ContentAlignment.MiddleRight;
-            btnMenuSettings.Location = new Point(3, 489);
+            btnMenuSettings.Location = new Point(3, 434);
             btnMenuSettings.Name = "btnMenuSettings";
             btnMenuSettings.Size = new Size(197, 49);
             btnMenuSettings.TabIndex = 8;
@@ -205,21 +195,32 @@
             // pnlFooter
             // 
             pnlFooter.BackColor = Color.FromArgb(184, 12, 9);
-            pnlFooter.Controls.Add(label3);
+            pnlFooter.Controls.Add(lblTime);
+            pnlFooter.Controls.Add(lblVersion);
             pnlFooter.Location = new Point(0, 904);
             pnlFooter.Name = "pnlFooter";
             pnlFooter.Size = new Size(1711, 37);
             pnlFooter.TabIndex = 1;
             // 
-            // label3
+            // lblTime
             // 
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(1515, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(193, 19);
-            label3.TabIndex = 2;
-            label3.Text = "Car Rental Automation v1.00";
-            label3.TextAlign = ContentAlignment.MiddleRight;
+            lblTime.ForeColor = Color.White;
+            lblTime.Location = new Point(1511, 12);
+            lblTime.Name = "lblTime";
+            lblTime.Size = new Size(193, 19);
+            lblTime.TabIndex = 3;
+            lblTime.Text = "00.00.0000 - 00:00:00";
+            lblTime.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblVersion
+            // 
+            lblVersion.ForeColor = Color.White;
+            lblVersion.Location = new Point(1290, 12);
+            lblVersion.Name = "lblVersion";
+            lblVersion.Size = new Size(193, 19);
+            lblVersion.TabIndex = 2;
+            lblVersion.Text = "Car Rental Automation v1.00";
+            lblVersion.TextAlign = ContentAlignment.MiddleRight;
             // 
             // pnlScreens
             // 
@@ -228,6 +229,11 @@
             pnlScreens.Name = "pnlScreens";
             pnlScreens.Size = new Size(1505, 910);
             pnlScreens.TabIndex = 2;
+            // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Tick += timer1_Tick;
             // 
             // MainForm
             // 
@@ -239,6 +245,7 @@
             Controls.Add(pnlSide);
             Controls.Add(pnlFooter);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "MainForm";
@@ -261,13 +268,14 @@
         private Button btnMenuCars;
         private Button btnMenuCustomers;
         private Button btnMenuFinance;
-        private Button btnMenuReports;
         private Button btnMenuSettings;
         private PictureBox pbUserImg;
-        private Label label2;
-        private Label label1;
+        private Label lblActiveUser;
+        private Label _lblActiveUser;
         private Panel pnlFooter;
-        private Label label3;
+        private Label lblVersion;
         public Panel pnlScreens;
+        private Label lblTime;
+        private System.Windows.Forms.Timer timer1;
     }
 }

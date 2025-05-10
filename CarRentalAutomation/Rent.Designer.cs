@@ -45,7 +45,6 @@
             lblVites = new Label();
             cmbKullanici = new ComboBox();
             lblKullanici = new Label();
-            pictureBox1 = new PictureBox();
             gbKullanici = new GroupBox();
             lblEhliyetSinif = new Label();
             lblEhliyetTarih = new Label();
@@ -66,7 +65,6 @@
             errorProvider1 = new ErrorProvider(components);
             btnActiveRents = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCars).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             gbKullanici.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
@@ -248,15 +246,6 @@
             lblKullanici.Size = new Size(100, 21);
             lblKullanici.TabIndex = 39;
             lblKullanici.Text = "KULLANICI :";
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.Ionic_Ionicons_Add_circle_32;
-            pictureBox1.Location = new Point(1387, 145);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(32, 32);
-            pictureBox1.TabIndex = 41;
-            pictureBox1.TabStop = false;
             // 
             // gbKullanici
             // 
@@ -471,7 +460,6 @@
             Controls.Add(lblKiralamaSüresi);
             Controls.Add(label1);
             Controls.Add(gbKullanici);
-            Controls.Add(pictureBox1);
             Controls.Add(cmbKullanici);
             Controls.Add(lblKullanici);
             Controls.Add(cmbYakit);
@@ -495,7 +483,6 @@
             Text = "Rent";
             Load += Rent_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCars).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             gbKullanici.ResumeLayout(false);
             gbKullanici.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
@@ -520,7 +507,6 @@
         private Label lblVites;
         private ComboBox cmbKullanici;
         private Label lblKullanici;
-        private PictureBox pictureBox1;
         private GroupBox gbKullanici;
         private Label _lblEhliyetNo;
         private Label _lblTc;

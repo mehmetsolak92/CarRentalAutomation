@@ -28,25 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            btnPersonelSettings = new Button();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // btnPersonelSettings
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 72F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            label1.Location = new Point(588, 449);
-            label1.Name = "label1";
-            label1.Size = new Size(396, 128);
-            label1.TabIndex = 1;
-            label1.Text = "Settings";
+            btnPersonelSettings.BackColor = Color.FromArgb(184, 12, 9);
+            btnPersonelSettings.FlatStyle = FlatStyle.Flat;
+            btnPersonelSettings.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            btnPersonelSettings.Image = Properties.Resources.Ionic_Ionicons_Person_circle_64__1_;
+            btnPersonelSettings.Location = new Point(23, 23);
+            btnPersonelSettings.Name = "btnPersonelSettings";
+            btnPersonelSettings.Size = new Size(167, 151);
+            btnPersonelSettings.TabIndex = 38;
+            btnPersonelSettings.Text = "PERSONEL YÖNETİMİ";
+            btnPersonelSettings.TextImageRelation = TextImageRelation.TextAboveImage;
+            btnPersonelSettings.UseVisualStyleBackColor = false;
+            btnPersonelSettings.Click += btnPersonelSettings_Click;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(btnPersonelSettings);
+            flowLayoutPanel1.Location = new Point(12, 12);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Padding = new Padding(20);
+            flowLayoutPanel1.Size = new Size(1690, 1002);
+            flowLayoutPanel1.TabIndex = 39;
             // 
             // Settings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1714, 1026);
-            Controls.Add(label1);
+            Controls.Add(flowLayoutPanel1);
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
@@ -54,12 +70,13 @@
             Name = "Settings";
             Text = "Settings";
             Load += Settings_Load;
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
+        private Button btnPersonelSettings;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

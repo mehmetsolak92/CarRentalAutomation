@@ -55,9 +55,13 @@
             btnCancel = new Button();
             btnTeslimAl = new Button();
             btnRentPage = new Button();
+            checkAktif = new CheckBox();
+            gbDurum = new GroupBox();
+            checkTamamlandi = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dgvActiveRents).BeginInit();
             gbKullanici.SuspendLayout();
             gbArac.SuspendLayout();
+            gbDurum.SuspendLayout();
             SuspendLayout();
             // 
             // dgvActiveRents
@@ -78,7 +82,7 @@
             dgvActiveRents.RowTemplate.ReadOnly = true;
             dgvActiveRents.RowTemplate.Resizable = DataGridViewTriState.False;
             dgvActiveRents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvActiveRents.Size = new Size(953, 751);
+            dgvActiveRents.Size = new Size(1079, 751);
             dgvActiveRents.TabIndex = 32;
             dgvActiveRents.SelectionChanged += dgvActiveRents_SelectionChanged;
             // 
@@ -129,7 +133,7 @@
             btnFilter.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
             btnFilter.Image = Properties.Resources.Ionic_Ionicons_Search_circle_32;
             btnFilter.ImageAlign = ContentAlignment.MiddleRight;
-            btnFilter.Location = new Point(794, 51);
+            btnFilter.Location = new Point(920, 51);
             btnFilter.Name = "btnFilter";
             btnFilter.Size = new Size(217, 69);
             btnFilter.TabIndex = 37;
@@ -145,9 +149,9 @@
             gbKullanici.Controls.Add(lblMail);
             gbKullanici.Controls.Add(_lblTelefon);
             gbKullanici.Controls.Add(_lblMail);
-            gbKullanici.Location = new Point(1029, 147);
+            gbKullanici.Location = new Point(1143, 147);
             gbKullanici.Name = "gbKullanici";
-            gbKullanici.Size = new Size(464, 137);
+            gbKullanici.Size = new Size(350, 137);
             gbKullanici.TabIndex = 43;
             gbKullanici.TabStop = false;
             gbKullanici.Text = "Kullanıcı Bilgileri";
@@ -156,9 +160,9 @@
             // 
             lblAdSoyad.BorderStyle = BorderStyle.FixedSingle;
             lblAdSoyad.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblAdSoyad.Location = new Point(153, 22);
+            lblAdSoyad.Location = new Point(102, 23);
             lblAdSoyad.Name = "lblAdSoyad";
-            lblAdSoyad.Size = new Size(271, 21);
+            lblAdSoyad.Size = new Size(234, 21);
             lblAdSoyad.TabIndex = 56;
             lblAdSoyad.Text = "-";
             // 
@@ -166,7 +170,7 @@
             // 
             _lblAdSoyad.AutoSize = true;
             _lblAdSoyad.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblAdSoyad.Location = new Point(12, 22);
+            _lblAdSoyad.Location = new Point(6, 23);
             _lblAdSoyad.Name = "_lblAdSoyad";
             _lblAdSoyad.Size = new Size(90, 21);
             _lblAdSoyad.TabIndex = 55;
@@ -176,9 +180,9 @@
             // 
             lblTelefon.BorderStyle = BorderStyle.FixedSingle;
             lblTelefon.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblTelefon.Location = new Point(153, 102);
+            lblTelefon.Location = new Point(102, 103);
             lblTelefon.Name = "lblTelefon";
-            lblTelefon.Size = new Size(271, 21);
+            lblTelefon.Size = new Size(234, 21);
             lblTelefon.TabIndex = 50;
             lblTelefon.Text = "-";
             // 
@@ -186,9 +190,9 @@
             // 
             lblMail.BorderStyle = BorderStyle.FixedSingle;
             lblMail.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblMail.Location = new Point(153, 62);
+            lblMail.Location = new Point(102, 63);
             lblMail.Name = "lblMail";
-            lblMail.Size = new Size(271, 21);
+            lblMail.Size = new Size(234, 21);
             lblMail.TabIndex = 49;
             lblMail.Text = "-";
             // 
@@ -196,7 +200,7 @@
             // 
             _lblTelefon.AutoSize = true;
             _lblTelefon.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblTelefon.Location = new Point(12, 102);
+            _lblTelefon.Location = new Point(6, 103);
             _lblTelefon.Name = "_lblTelefon";
             _lblTelefon.Size = new Size(75, 21);
             _lblTelefon.TabIndex = 44;
@@ -206,7 +210,7 @@
             // 
             _lblMail.AutoSize = true;
             _lblMail.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblMail.Location = new Point(12, 62);
+            _lblMail.Location = new Point(6, 63);
             _lblMail.Name = "_lblMail";
             _lblMail.Size = new Size(52, 21);
             _lblMail.TabIndex = 43;
@@ -224,9 +228,9 @@
             gbArac.Controls.Add(_lblYil);
             gbArac.Controls.Add(_lblModel);
             gbArac.Controls.Add(_lblMarka);
-            gbArac.Location = new Point(1029, 290);
+            gbArac.Location = new Point(1143, 290);
             gbArac.Name = "gbArac";
-            gbArac.Size = new Size(464, 216);
+            gbArac.Size = new Size(350, 216);
             gbArac.TabIndex = 57;
             gbArac.TabStop = false;
             gbArac.Text = "Araç Bilgileri";
@@ -235,9 +239,9 @@
             // 
             lblPlaka.BorderStyle = BorderStyle.FixedSingle;
             lblPlaka.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblPlaka.Location = new Point(153, 22);
+            lblPlaka.Location = new Point(102, 21);
             lblPlaka.Name = "lblPlaka";
-            lblPlaka.Size = new Size(271, 21);
+            lblPlaka.Size = new Size(234, 21);
             lblPlaka.TabIndex = 56;
             lblPlaka.Text = "-";
             // 
@@ -245,7 +249,7 @@
             // 
             _lblPlaka.AutoSize = true;
             _lblPlaka.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblPlaka.Location = new Point(12, 22);
+            _lblPlaka.Location = new Point(6, 21);
             _lblPlaka.Name = "_lblPlaka";
             _lblPlaka.Size = new Size(60, 21);
             _lblPlaka.TabIndex = 55;
@@ -255,9 +259,9 @@
             // 
             lblRenk.BorderStyle = BorderStyle.FixedSingle;
             lblRenk.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblRenk.Location = new Point(153, 182);
+            lblRenk.Location = new Point(102, 181);
             lblRenk.Name = "lblRenk";
-            lblRenk.Size = new Size(271, 21);
+            lblRenk.Size = new Size(234, 21);
             lblRenk.TabIndex = 52;
             lblRenk.Text = "-";
             // 
@@ -265,9 +269,9 @@
             // 
             lblYil.BorderStyle = BorderStyle.FixedSingle;
             lblYil.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblYil.Location = new Point(153, 142);
+            lblYil.Location = new Point(102, 141);
             lblYil.Name = "lblYil";
-            lblYil.Size = new Size(271, 21);
+            lblYil.Size = new Size(234, 21);
             lblYil.TabIndex = 51;
             lblYil.Text = "-";
             // 
@@ -275,9 +279,9 @@
             // 
             lblModel.BorderStyle = BorderStyle.FixedSingle;
             lblModel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblModel.Location = new Point(153, 102);
+            lblModel.Location = new Point(102, 101);
             lblModel.Name = "lblModel";
-            lblModel.Size = new Size(271, 21);
+            lblModel.Size = new Size(234, 21);
             lblModel.TabIndex = 50;
             lblModel.Text = "-";
             // 
@@ -285,9 +289,9 @@
             // 
             lblMarka.BorderStyle = BorderStyle.FixedSingle;
             lblMarka.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 162);
-            lblMarka.Location = new Point(153, 62);
+            lblMarka.Location = new Point(102, 61);
             lblMarka.Name = "lblMarka";
-            lblMarka.Size = new Size(271, 21);
+            lblMarka.Size = new Size(234, 21);
             lblMarka.TabIndex = 49;
             lblMarka.Text = "-";
             // 
@@ -295,7 +299,7 @@
             // 
             _lblRenk.AutoSize = true;
             _lblRenk.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblRenk.Location = new Point(12, 182);
+            _lblRenk.Location = new Point(6, 181);
             _lblRenk.Name = "_lblRenk";
             _lblRenk.Size = new Size(56, 21);
             _lblRenk.TabIndex = 46;
@@ -305,7 +309,7 @@
             // 
             _lblYil.AutoSize = true;
             _lblYil.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblYil.Location = new Point(12, 142);
+            _lblYil.Location = new Point(6, 141);
             _lblYil.Name = "_lblYil";
             _lblYil.Size = new Size(38, 21);
             _lblYil.TabIndex = 45;
@@ -315,7 +319,7 @@
             // 
             _lblModel.AutoSize = true;
             _lblModel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblModel.Location = new Point(12, 102);
+            _lblModel.Location = new Point(6, 101);
             _lblModel.Name = "_lblModel";
             _lblModel.Size = new Size(67, 21);
             _lblModel.TabIndex = 44;
@@ -325,7 +329,7 @@
             // 
             _lblMarka.AutoSize = true;
             _lblMarka.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            _lblMarka.Location = new Point(12, 62);
+            _lblMarka.Location = new Point(6, 61);
             _lblMarka.Name = "_lblMarka";
             _lblMarka.Size = new Size(66, 21);
             _lblMarka.TabIndex = 43;
@@ -333,14 +337,14 @@
             // 
             // btnCancel
             // 
-            btnCancel.BackColor = Color.FromArgb(184, 12, 9);
+            btnCancel.BackColor = SystemColors.Control;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
             btnCancel.Image = Properties.Resources.Ionic_Ionicons_Close_circle_32;
             btnCancel.ImageAlign = ContentAlignment.MiddleRight;
-            btnCancel.Location = new Point(1041, 829);
+            btnCancel.Location = new Point(1149, 829);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(217, 69);
+            btnCancel.Size = new Size(159, 69);
             btnCancel.TabIndex = 58;
             btnCancel.Text = "İPTAL ET";
             btnCancel.UseVisualStyleBackColor = false;
@@ -353,9 +357,9 @@
             btnTeslimAl.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
             btnTeslimAl.Image = Properties.Resources.Ionic_Ionicons_Enter_32;
             btnTeslimAl.ImageAlign = ContentAlignment.MiddleRight;
-            btnTeslimAl.Location = new Point(1264, 829);
+            btnTeslimAl.Location = new Point(1322, 829);
             btnTeslimAl.Name = "btnTeslimAl";
-            btnTeslimAl.Size = new Size(217, 69);
+            btnTeslimAl.Size = new Size(159, 69);
             btnTeslimAl.TabIndex = 59;
             btnTeslimAl.Text = "TESLİM AL";
             btnTeslimAl.UseVisualStyleBackColor = false;
@@ -377,9 +381,41 @@
             btnRentPage.UseVisualStyleBackColor = false;
             btnRentPage.Click += button1_Click;
             // 
+            // checkAktif
+            // 
+            checkAktif.AutoSize = true;
+            checkAktif.Location = new Point(6, 24);
+            checkAktif.Name = "checkAktif";
+            checkAktif.Size = new Size(52, 21);
+            checkAktif.TabIndex = 61;
+            checkAktif.Text = "Aktif";
+            checkAktif.UseVisualStyleBackColor = true;
+            // 
+            // gbDurum
+            // 
+            gbDurum.Controls.Add(checkTamamlandi);
+            gbDurum.Controls.Add(checkAktif);
+            gbDurum.Location = new Point(788, 46);
+            gbDurum.Name = "gbDurum";
+            gbDurum.Size = new Size(126, 74);
+            gbDurum.TabIndex = 62;
+            gbDurum.TabStop = false;
+            gbDurum.Text = "Durum";
+            // 
+            // checkTamamlandi
+            // 
+            checkTamamlandi.AutoSize = true;
+            checkTamamlandi.Location = new Point(6, 47);
+            checkTamamlandi.Name = "checkTamamlandi";
+            checkTamamlandi.Size = new Size(97, 21);
+            checkTamamlandi.TabIndex = 62;
+            checkTamamlandi.Text = "Tamamlandı";
+            checkTamamlandi.UseVisualStyleBackColor = true;
+            // 
             // RentActiveList
             // 
             ClientSize = new Size(1505, 910);
+            Controls.Add(gbDurum);
             Controls.Add(btnRentPage);
             Controls.Add(btnTeslimAl);
             Controls.Add(btnCancel);
@@ -402,6 +438,8 @@
             gbKullanici.PerformLayout();
             gbArac.ResumeLayout(false);
             gbArac.PerformLayout();
+            gbDurum.ResumeLayout(false);
+            gbDurum.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -435,5 +473,8 @@
         private Button btnCancel;
         private Button btnTeslimAl;
         private Button btnRentPage;
+        private CheckBox checkAktif;
+        private GroupBox gbDurum;
+        private CheckBox checkTamamlandi;
     }
 }

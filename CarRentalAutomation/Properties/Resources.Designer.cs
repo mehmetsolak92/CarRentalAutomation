@@ -63,6 +63,26 @@ namespace CarRentalAutomation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CAR_RENTAL_AUTOMATION {
+            get {
+                object obj = ResourceManager.GetObject("CAR RENTAL AUTOMATION", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Icons8_Windows_8_Logos_Excel_32 {
+            get {
+                object obj = ResourceManager.GetObject("Icons8-Windows-8-Logos-Excel.32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ionic_Ionicons_Add_circle_32 {
             get {
                 object obj = ResourceManager.GetObject("Ionic-Ionicons-Add-circle.32", resourceCulture);
@@ -86,6 +106,16 @@ namespace CarRentalAutomation.Properties {
         internal static System.Drawing.Bitmap Ionic_Ionicons_Car_32 {
             get {
                 object obj = ResourceManager.GetObject("Ionic-Ionicons-Car.32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ionic_Ionicons_Cash_32 {
+            get {
+                object obj = ResourceManager.GetObject("Ionic-Ionicons-Cash.32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -216,6 +246,26 @@ namespace CarRentalAutomation.Properties {
         internal static System.Drawing.Bitmap Ionic_Ionicons_Person_circle_64 {
             get {
                 object obj = ResourceManager.GetObject("Ionic-Ionicons-Person-circle.64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ionic_Ionicons_Person_circle_64__1_ {
+            get {
+                object obj = ResourceManager.GetObject("Ionic-Ionicons-Person-circle.64 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ionic_Ionicons_Receipt_32 {
+            get {
+                object obj = ResourceManager.GetObject("Ionic-Ionicons-Receipt.32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

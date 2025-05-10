@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarRentalAutomation.Class;
 using Microsoft.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CarRentalAutomation
 {
@@ -25,7 +24,7 @@ namespace CarRentalAutomation
         private void Rent_Load(object sender, EventArgs e)
         {
             FormStyle.changeFormStyle(this);
-
+            btnRent.Enabled = false;
             cmbVites.DataSource = Constants.VitesTipi;
             cmbYakit.DataSource = Constants.YakitTipi;
 
@@ -43,7 +42,7 @@ namespace CarRentalAutomation
 
         private void btnSearchCar_Click(object sender, EventArgs e)
         {
-
+         
             SearchAvailableCar();
             isNotFirstRun = true;
         }
@@ -113,9 +112,14 @@ namespace CarRentalAutomation
 
         private void dtpRentStart_ValueChanged(object sender, EventArgs e)
         {
-            if (dtpRentStart.Value.Date > dtpRentEnd.Value.Date)
+            if (dtpRentStart.Value.Date >= dtpRentEnd.Value.Date)
             {
                 dtpRentEnd.Value = dtpRentStart.Value.AddDays(1);
+            }
+
+            if (dtpRentStart.Value.Date < DateTime.Now.Date)
+            {
+                dtpRentStart.Value = DateTime.Now.Date;
             }
 
             CalculateRentTime();
@@ -128,7 +132,7 @@ namespace CarRentalAutomation
 
         private void dtpRentEnd_ValueChanged(object sender, EventArgs e)
         {
-            if (dtpRentStart.Value.Date > dtpRentEnd.Value.Date)
+            if (dtpRentStart.Value.Date >= dtpRentEnd.Value.Date)
             {
                 dtpRentEnd.Value = dtpRentStart.Value.AddDays(1);
             }
@@ -158,6 +162,7 @@ namespace CarRentalAutomation
 
         private void dgvCars_SelectionChanged(object sender, EventArgs e)
         {
+            btnRent.Enabled = true;
             CalculateTotalPrice();
         }
 
@@ -227,30 +232,37 @@ namespace CarRentalAutomation
         {
             try
             {
-                string query = $"INSERT INTO Kiralama (KullaniciId, AracId, BaslangicTarihi, BitisTarihi, ToplamTutar, Aciklama) " +
-                $"VALUES ({((Kullanici)cmbKullanici.SelectedItem).KullaniciId}, {dgvCars.CurrentRow.Cells["AracId"].Value}, " +
-                $"'{dtpRentStart.Value.Date.ToString("yyyy-MM-dd")}', '{dtpRentEnd.Value.Date.ToString("yyyy-MM-dd")}', {toplamTutar}, '{txtAciklama.Text}')";
+                string query = "INSERT INTO Kiralama (AracId, KullaniciId, BaslangicTarihi, BitisTarihi, ToplamTutar, Aciklama, Durum) " +
+                               "VALUES (@AracId, @KullaniciId, @BaslangicTarihi, @BitisTarihi, @ToplamTutar, @Aciklama, 'Aktif')";
 
                 using (SqlConnection con = new SqlConnection(Constants.SQLPath))
                 {
                     con.Open();
                     SqlCommand cmd = new SqlCommand(query, con);
+
+                    cmd.Parameters.AddWithValue("@AracId", dgvCars.CurrentRow.Cells["AracId"].Value);
+                    cmd.Parameters.AddWithValue("@KullaniciId", ((Kullanici)cmbKullanici.SelectedItem).KullaniciId);
+                    cmd.Parameters.AddWithValue("@BaslangicTarihi", dtpRentStart.Value.Date);
+                    cmd.Parameters.AddWithValue("@BitisTarihi", dtpRentEnd.Value.Date);
+                    cmd.Parameters.AddWithValue("@ToplamTutar", toplamTutar);
+                    cmd.Parameters.AddWithValue("@Aciklama", txtAciklama.Text);
+
                     if (cmd.ExecuteNonQuery() > 0)
                     {
                         this.DialogResult = DialogResult.OK;
-
                     }
                     else
                     {
-                        return;
+                        MessageBox.Show("Kiralama eklenemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
+                
+                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
                 Methods.WriteLog(trace, ex);
-                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

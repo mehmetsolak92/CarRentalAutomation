@@ -1,3 +1,5 @@
+using OfficeOpenXml;
+
 namespace CarRentalAutomation
 {
     internal static class Program
@@ -10,6 +12,7 @@ namespace CarRentalAutomation
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            
             ApplicationConfiguration.Initialize();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -17,9 +20,25 @@ namespace CarRentalAutomation
             {
                 if (splashScreen.ShowDialog() == DialogResult.OK)
                 {
-                    Application.Run(new MainForm());
+                    using (UserLogin loginForm = new UserLogin())
+                    {
+                        if (loginForm.ShowDialog() == DialogResult.OK)
+                        {
+                            Application.Run(new MainForm());
+                        }
+                        else
+                        {
+                            Application.Exit();
+                        }
+                    }
+                    //Application.Run(new MainForm());
+                }
+                else
+                {
+                    Application.Exit();
                 }
             }
+
         }
     }
 }

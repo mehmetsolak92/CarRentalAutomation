@@ -118,5 +118,10 @@ namespace CarRentalAutomation
                 GetCustomersData();
             }
         }
+
+        private void btnExportCsv_Click(object sender, EventArgs e)
+        {
+            Data.ExportToExcel(dgvCustomers, "Kullanıcılar");
+        }
     }
 }

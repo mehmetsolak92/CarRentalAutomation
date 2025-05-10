@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarRentalAutomation.Class;
 using Microsoft.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CarRentalAutomation
 {
@@ -21,8 +20,11 @@ namespace CarRentalAutomation
         }
 
         public MainForm AnaForm { get; set; }
+        string Durum = string.Empty;
         private void RentActiveList_Load(object sender, EventArgs e)
         {
+            checkAktif.Checked = true;
+            Durum = "Aktif";
             dtpRentStart.Value = DateTime.Now.Date.AddDays(-7);
             dtpRentEnd.Value = DateTime.Now.Date.AddDays(7);
             ReadActiveRentals();
@@ -32,11 +34,20 @@ namespace CarRentalAutomation
         {
             DataTable dataTable = new DataTable();
 
-            string query = $"SELECT Kiralama.KiralamaId, Kiralama.AracId, Araclar.Plaka, Kiralama.KullaniciId, Kullanicilar.AdSoyad, Kiralama.BaslangicTarihi, Kiralama.BitisTarihi, Kiralama.ToplamTutar, Kiralama.Aciklama " +
+            string query = $"SELECT Kiralama.KiralamaId, Kiralama.AracId, Araclar.Plaka, Kiralama.KullaniciId, Kullanicilar.AdSoyad, Kiralama.BaslangicTarihi, Kiralama.BitisTarihi, Kiralama.ToplamTutar, Kiralama.Aciklama, Kiralama.Durum " +
                 $"FROM Kiralama " +
                 $"INNER JOIN Araclar ON Kiralama.AracId = Araclar.AracId " +
                 $"INNER JOIN Kullanicilar ON Kiralama.KullaniciId = Kullanicilar.KullaniciId " +
                 $"WHERE Kiralama.BaslangicTarihi >= '{dtpRentStart.Value.Date.ToString("yyyy-MM-dd")}' AND Kiralama.BitisTarihi <= '{dtpRentEnd.Value.Date.ToString("yyyy-MM-dd")}'";
+
+            if (checkAktif.Checked && !checkTamamlandi.Checked)
+            {
+                query += " AND Kiralama.Durum = 'Aktif'";
+            }
+            else if (!checkAktif.Checked && checkTamamlandi.Checked)
+            {
+                query += " AND Kiralama.Durum = 'Tamamlandı'";
+            }
 
             dataTable = SQL.Select(query);
             dgvActiveRents.DataSource = dataTable;
@@ -66,6 +77,7 @@ namespace CarRentalAutomation
             dgvActiveRents.Columns["BitisTarihi"].HeaderText = "Bitiş Tarihi";
             dgvActiveRents.Columns["ToplamTutar"].HeaderText = "Vites Tipi";
             dgvActiveRents.Columns["Aciklama"].HeaderText = "Açıklama";
+            dgvActiveRents.Columns["Durum"].HeaderText = "Durum";
 
             dgvActiveRents.Columns["KiralamaId"].Width = 50;
             dgvActiveRents.Columns["Plaka"].Width = 120;
@@ -73,7 +85,8 @@ namespace CarRentalAutomation
             dgvActiveRents.Columns["BaslangicTarihi"].Width = 120;
             dgvActiveRents.Columns["BitisTarihi"].Width = 120;
             dgvActiveRents.Columns["ToplamTutar"].Width = 100;
-            dgvActiveRents.Columns["Aciklama"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvActiveRents.Columns["Aciklama"].Width = 250;
+            dgvActiveRents.Columns["Durum"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dgvActiveRents.Columns["AracId"].Visible = false;
             dgvActiveRents.Columns["KullaniciId"].Visible = false;
@@ -100,14 +113,40 @@ namespace CarRentalAutomation
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            int selectedKiralamaId = Convert.ToInt32(dgvActiveRents.CurrentRow.Cells["KiralamaId"].Value);
-            SQL.Delete("Kiralama", "KiralamaId", selectedKiralamaId);
+            if (dgvActiveRents.CurrentRow.Index < 0) return;
+            if (dgvActiveRents.CurrentRow.Cells["Durum"].Value.ToString() == "Tamamlandı")
+            {
+                MessageBox.Show("Bu kiralama işlemi tamamlanmış. İptal edilemez!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DialogResult result = MessageBox.Show("Bu kiralamayı iptal etmek istediğinize emin misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                int selectedKiralamaId = Convert.ToInt32(dgvActiveRents.CurrentRow.Cells["KiralamaId"].Value);
+                SQL.Delete("Kiralama", "KiralamaId", selectedKiralamaId);
+            }
+           
         }
 
         private void btnTeslimAl_Click(object sender, EventArgs e)
         {
+            if (dgvActiveRents.CurrentRow.Index < 0) return;
+            if (dgvActiveRents.CurrentRow.Cells["Durum"].Value.ToString() == "Tamamlandı")
+            {
+                MessageBox.Show("Bu kiralama işlemi tamamlanmış. Teslim Alınamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             int selectedKiralamaId = Convert.ToInt32(dgvActiveRents.CurrentRow.Cells["KiralamaId"].Value);
+            DialogResult result = new RentCarsReturn(selectedKiralamaId).ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                ReadActiveRentals();
+            }
 
         }
+
+
+      
     }
 }

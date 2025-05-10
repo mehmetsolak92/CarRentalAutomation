@@ -23,5 +23,11 @@ namespace CarRentalAutomation
         {
             FormStyle.changeFormStyle(this);
         }
+
+        private void btnPersonelSettings_Click(object sender, EventArgs e)
+        {
+            SettingsUsers settingsUsers = new SettingsUsers();
+            settingsUsers.ShowDialog();
+        }
     }
 }

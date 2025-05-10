@@ -30,6 +30,8 @@
         {
             pnlScreens = new Panel();
             btnCarList = new Button();
+            button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // pnlScreens
@@ -55,11 +57,41 @@
             btnCarList.UseVisualStyleBackColor = false;
             btnCarList.Click += btnCarList_Click;
             // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(182, 12, 9);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            button1.Image = Properties.Resources.Ionic_Ionicons_List_circle_32;
+            button1.ImageAlign = ContentAlignment.MiddleRight;
+            button1.Location = new Point(215, 10);
+            button1.Name = "button1";
+            button1.Size = new Size(197, 49);
+            button1.TabIndex = 5;
+            button1.Text = "BAKIM KAYITLARI";
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(182, 12, 9);
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 162);
+            button2.Image = Properties.Resources.Ionic_Ionicons_List_circle_32;
+            button2.ImageAlign = ContentAlignment.MiddleRight;
+            button2.Location = new Point(418, 10);
+            button2.Name = "button2";
+            button2.Size = new Size(197, 49);
+            button2.TabIndex = 6;
+            button2.Text = "HASAR KAYITLARI";
+            button2.UseVisualStyleBackColor = false;
+            // 
             // Cars
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1505, 910);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(btnCarList);
             Controls.Add(pnlScreens);
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 162);
@@ -76,5 +108,7 @@
 
         private Panel pnlScreens;
         private Button btnCarList;
+        private Button button1;
+        private Button button2;
     }
 }

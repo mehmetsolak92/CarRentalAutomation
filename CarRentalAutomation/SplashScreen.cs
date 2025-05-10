@@ -14,80 +14,85 @@ namespace CarRentalAutomation
 {
     public partial class SplashScreen : BaseForm
     {
+
         public SplashScreen()
         {
             InitializeComponent();
+
+            this.Opacity = 0; 
+            lblStatus.Text = "Yükleniyor...";
+            progressBar1.Value = 0;
+            progressBar1.ForeColor = Color.FromArgb(0, 0, 0);
+            this.ShowInTaskbar = false;
+
         }
+
 
         private async void SplashScreen_Load(object sender, EventArgs e)
         {
+            timerFadeIn.Start();  
             await ReadDB();
-            this.DialogResult = DialogResult.OK;
+            await Task.Delay(500); 
+
+            timerFadeOut.Start();
+
+            
         }
 
         private async Task ReadDB()
         {
-            
-            string query = "SELECT * FROM Markalar ORDER BY MarkaAdi";
-            Constants.Markalar.Add(new Marka { ID = -1, Name = "Seçiniz.." });
-            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Constants.Markalar.Add(new Marka
-                        {
-                            ID = Convert.ToInt32(reader["MarkaId"]),
-                            Name = Convert.ToString(reader["MarkaAdi"]),
-                        });
-                    }
-                }
-            }
 
+            Data.GetBrandData();
 
-            query = "SELECT * FROM Modeller";
-            Constants.Modeller.Add(new Model { ID = -1, Name = "Seçiniz..", MarkaID = -1 });
-            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Constants.Modeller.Add(new Model
-                        {
-                            ID = Convert.ToInt32(reader["ModelId"]),
-                            Name = Convert.ToString(reader["ModelAdi"]),
-                            MarkaID = Convert.ToInt32(reader["MarkaId"])
-                        });
-                    }
-                }
-            }
+            lblStatus.Text = "Markalar yükleniyor... %25";
+            progressBar1.Value = 25;
+            await Task.Delay(1000);
 
-            query = "SELECT * FROM Renkler";
-            Constants.Renkler.Add("Seçiniz..");
-            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
-            {
-                con.Open();
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Constants.Renkler.Add(Convert.ToString(reader["RenkAdi"]));
-                    }
-                }
-            }
+            Data.GetModelData();
 
+            lblStatus.Text = "Modeller yükleniyor... %50";
+            progressBar1.Value = 50;
+            await Task.Delay(1000);
+
+            Data.GetColorData();
+
+            lblStatus.Text = "Renkler yükleniyor... %75";
+            progressBar1.Value = 75;
+            await Task.Delay(1000);
 
             Data.GetCustomersData();
             Data.GetCarsData();
+            Data.GetStaffsData();
+    
 
+            lblStatus.Text = "Kullanıcı dataları yükleniyor... %100";
+            progressBar1.Value = 100;
+            await Task.Delay(1000);
+        }
 
+        private void timerFadeIn_Tick(object sender, EventArgs e)
+        {
+            if (this.Opacity < 1)
+            {
+                this.Opacity += 0.05;
+            }
+            else
+            {
+                timerFadeIn.Stop();
+            }
+        }
+
+        private void timerFadeOut_Tick(object sender, EventArgs e)
+        {
+            if (this.Opacity > 0)
+            {
+                this.Opacity -= 0.05;
+            }
+            else
+            {
+                timerFadeOut.Stop();
+                this.DialogResult = DialogResult.OK;
+            }
         }
     }
 }

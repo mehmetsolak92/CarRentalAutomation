@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using OfficeOpenXml;
 
 namespace CarRentalAutomation.Class
 {
@@ -18,7 +20,7 @@ namespace CarRentalAutomation.Class
 
     }
 
-    
+
 
     public static class SQL
     {
@@ -46,7 +48,31 @@ namespace CarRentalAutomation.Class
             return dataTable;
         }
 
-        public static int Delete(string tableName,string whereColumn,int ID)
+        public static object SelectScalar(string query)
+        {
+            object result = null;
+            using (SqlConnection connection = new SqlConnection(Constants.SQLPath))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        result = command.ExecuteScalar();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+                    Methods.WriteLog(trace, ex);
+
+                }
+            }
+            if (result == DBNull.Value || result == null) return 0; else return result;
+            
+        }
+
+        public static int Delete(string tableName, string whereColumn, int ID)
         {
             string query = $"DELETE FROM {tableName} WHERE {whereColumn} = {ID}";
             using (SqlConnection connection = new SqlConnection(Constants.SQLPath))
@@ -66,7 +92,7 @@ namespace CarRentalAutomation.Class
                     return 0;
                 }
             }
-           
+
         }
     }
 
@@ -148,6 +174,152 @@ namespace CarRentalAutomation.Class
                         ));
                     }
                 }
+            }
+        }
+
+        public static void GetStaffsData()
+        {
+            Constants.Personeller.Clear();
+
+            string query = "SELECT * FROM Personeller";
+            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Constants.Personeller.Add(new Personel(
+                            Convert.ToInt32(reader["PersonelId"]),
+                            Convert.ToString(reader["AdSoyad"]),
+                            Convert.ToString(reader["Sifre"]),
+                            Convert.ToString(reader["Gorev"]),
+                            Convert.ToString(reader["Telefon"]),
+                            Convert.ToString(reader["Email"]),
+                            Convert.ToString(reader["TcNo"])
+                        ));
+                    }
+                }
+            }
+        }
+
+        
+
+        public static void GetColorData()
+        {
+            string query = "SELECT * FROM Renkler";
+            Constants.Renkler.Add("Seçiniz..");
+            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Constants.Renkler.Add(Convert.ToString(reader["RenkAdi"]));
+                    }
+                }
+            }
+        }
+
+        public static void GetModelData()
+        {
+            string query = "SELECT * FROM Modeller";
+            Constants.Modeller.Add(new Model { ID = -1, Name = "Seçiniz..", MarkaID = -1 });
+            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Constants.Modeller.Add(new Model
+                        {
+                            ID = Convert.ToInt32(reader["ModelId"]),
+                            Name = Convert.ToString(reader["ModelAdi"]),
+                            MarkaID = Convert.ToInt32(reader["MarkaId"])
+                        });
+                    }
+                }
+            }
+        }
+
+        public static void GetBrandData()
+        {
+            string query = "SELECT * FROM Markalar ORDER BY MarkaAdi";
+            Constants.Markalar.Add(new Marka { ID = -1, Name = "Seçiniz.." });
+            using (SqlConnection con = new SqlConnection(Constants.SQLPath))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Constants.Markalar.Add(new Marka
+                        {
+                            ID = Convert.ToInt32(reader["MarkaId"]),
+                            Name = Convert.ToString(reader["MarkaAdi"]),
+                        });
+                    }
+                }
+            }
+        }
+
+        public static void ExportToExcel(DataGridView dataGridView1, string Name)
+        {
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            folderDialog.Description = "Excel dosyasını kaydetmek için bir klasör seçin";
+
+            if (folderDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string fileName = Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xlsx";
+            string fullPath = Path.Combine(folderDialog.SelectedPath, fileName);
+
+            try
+            {
+                using (ExcelPackage package = new ExcelPackage())
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(Name);
+
+                    
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        worksheet.Cells[1, i + 1].Value = dataGridView1.Columns[i].HeaderText;
+                    
+                        worksheet.Cells[1, i + 1].Style.Font.Bold = true;
+                    }
+
+                   
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                        {
+                            worksheet.Cells[i + 2, j + 1].Value = dataGridView1.Rows[i].Cells[j].Value;
+                        }
+                    }
+
+                    
+                    worksheet.Cells.AutoFitColumns();
+
+                    
+                    FileInfo file = new FileInfo(fullPath);
+                    package.SaveAs(file);
+
+                    MessageBox.Show("Veriler başarıyla Excel'e aktarıldı");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+                Methods.WriteLog(trace, ex);
+                MessageBox.Show("Hata: " + ex.Message);
             }
         }
     }
@@ -249,6 +421,64 @@ namespace CarRentalAutomation.Class
             pnlScreens.Controls.Add(form);
             form.Show();
 
+        }
+
+        public static string ComputeSha256Hash(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                    builder.Append(b.ToString("x2"));
+                return builder.ToString();
+            }
+        }
+
+
+        public static bool TcDogrula(string tc)
+        {
+            if (tc.Length != 11 || !long.TryParse(tc, out _) || tc[0] == '0')
+                return false;
+
+            int[] digits = tc.Select(c => int.Parse(c.ToString())).ToArray();
+
+            int oddSum = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];
+            int evenSum = digits[1] + digits[3] + digits[5] + digits[7];
+
+            int digit10 = ((oddSum * 7) - evenSum) % 10;
+            int digit11 = digits.Take(10).Sum() % 10;
+
+            return (digit10 == digits[9]) && (digit11 == digits[10]);
+        }
+
+        public static bool EmailDogrula(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
+        }
+
+        public static bool TelefonDogrula(string telefon)
+        {
+            if (telefon.Length != 11)
+                return false;
+
+            if (!long.TryParse(telefon, out _))
+                return false;
+
+            if (!telefon.StartsWith("05"))
+                return false;
+
+            return true;
+        }
+
+
+        public static bool IsPasswordStrong(string pwd)
+        {
+            return Regex.IsMatch(pwd, @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#\$%\^&\*]{4,}$");
         }
 
     }
